@@ -14,4 +14,4 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      run: .Android/gradlew build
+      run: ./Android/gradlew build
