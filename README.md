@@ -1,21 +1,10 @@
 # CS4530-Project
 University Of Utah CS4530 Project
 
+## Projects
+This repo has 2 projects.
 
-## Code Style
+- Android
 
-### Logging
-Use `logback` instead of `Log` which is Android provided class
-```
-//Example
-class ExampleClass
-{
-  private val logger by getLogger()
-  
-  fun hello()
-  {
-    logger.debug("world")
-  }
-}
-```
+- Back-end (Firebase Function)
 
