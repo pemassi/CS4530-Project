@@ -13,9 +13,9 @@ import kotlin.reflect.KClass
 abstract class LiveModelFragment<T : ViewModel>(private val modelClass: KClass<T>, @LayoutRes private val layoutRes: Int): Fragment()
 {
     protected lateinit var root: View
-    protected lateinit var viewModel: T
+    protected open lateinit var viewModel: T
 
-    final override fun onCreateView(
+    open override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?

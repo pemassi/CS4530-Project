@@ -1,13 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.editmessage.EditMessageFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="347dp"
+        android:layout_height="39dp"
+        android:text="Button"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="659dp" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/edit_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Message"
+        android:textColor="#47525E"
+        android:textSize="36sp"
+        tools:layout_editor_absoluteX="96dp"
+        tools:layout_editor_absoluteY="153dp" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="302dp"
+        android:layout_height="404dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:text="Default Message: This message is to alert you that the user is in an emergency."
+        android:textColor="#47525E"
+        tools:layout_editor_absoluteX="54dp"
+        tools:layout_editor_absoluteY="221dp" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="416dp"
+        android:layout_height="103dp"
+        android:background="#13CECE"
+        android:gravity="center"
+        android:text="      Create custom message"
+        android:textAlignment="viewStart"
+        android:textColor="#1C1B1B"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="-3dp"
+        tools:layout_editor_absoluteY="-3dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
