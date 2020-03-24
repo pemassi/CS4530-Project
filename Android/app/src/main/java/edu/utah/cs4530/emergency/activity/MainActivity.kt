@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.nav_home,
                 R.id.nav_contacts,
+                R.id.nav_history,
                 R.id.nav_gallery,
                 R.id.nav_slideshow,
                 R.id.nav_tools,
