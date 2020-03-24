@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
@@ -7,12 +8,13 @@
     tools:context=".ui.editmessage.EditMessageFragment">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/nextscreen_button"
         android:layout_width="347dp"
         android:layout_height="39dp"
-        android:text="Button"
+        android:text="Next screen"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="659dp" />
+        tools:layout_editor_absoluteY="658dp" />
 
     <TextView
         android:id="@+id/edit_label"
@@ -21,20 +23,22 @@
         android:text="Edit Message"
         android:textColor="#47525E"
         android:textSize="36sp"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="96dp"
-        tools:layout_editor_absoluteY="153dp" />
+        tools:layout_editor_absoluteY="144dp" />
 
     <EditText
-        android:id="@+id/editText2"
-        android:layout_width="302dp"
-        android:layout_height="404dp"
+        android:id="@+id/edit_message_input"
+        android:layout_width="300dp"
+        android:layout_height="308dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
         android:text="Default Message: This message is to alert you that the user is in an emergency."
         android:textColor="#47525E"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="54dp"
-        tools:layout_editor_absoluteY="221dp" />
+        tools:layout_editor_absoluteY="206dp" />
 
     <TextView
         android:id="@+id/text"
@@ -47,6 +51,15 @@
         android:textColor="#1C1B1B"
         android:textSize="30sp"
         tools:layout_editor_absoluteX="-3dp"
-        tools:layout_editor_absoluteY="-3dp" />
+        tools:layout_editor_absoluteY="-3dp"
+        tools:ignore="MissingConstraints,RtlCompat" />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="521dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
