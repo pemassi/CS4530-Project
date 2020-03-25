@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDexApplication
 import com.google.firebase.FirebaseApp
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class EmergencyApplication: MultiDexApplication()
 {
@@ -12,6 +14,9 @@ class EmergencyApplication: MultiDexApplication()
 
         //Use vector image
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+
+        //Firebase Database Settings
+        Firebase.database.setPersistenceEnabled(true)
 
         //Firebase initialize
         FirebaseApp.initializeApp(this)

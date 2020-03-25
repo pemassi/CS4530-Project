@@ -1,8 +1,13 @@
 package edu.utah.cs4530.emergency.dao
 
+import com.google.firebase.database.IgnoreExtraProperties
+
+@IgnoreExtraProperties
 data class UserDAO (
-    val uid: String,
-    val imageUrl: String,
-    val email: String,
-    val name: String
+    val name: String? = null,
+    val phoneNumber: String? = null,
+    val imageUrl: String? = null,
+    val fcmToken: String? = null,
+    val contactList: ArrayList<String>? = null,
+    val alertHistories: ArrayList<AlertHistoryDAO>? = null
 )
