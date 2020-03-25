@@ -29,7 +29,7 @@ class ContactsFragment : LiveModelFragment<ContactsViewModel>(ContactsViewModel:
             itemAnimator = DefaultItemAnimator()
         }
 
-        viewModel.contectList.observe(this, Observer {
+        viewModel.contactList.observe(this, Observer {
             root.contactsRecyclerView.adapter = ContactsAdapter(it)
         })
 
@@ -47,13 +47,12 @@ class ContactsFragment : LiveModelFragment<ContactsViewModel>(ContactsViewModel:
 
                         cursor.moveToFirst()
 
-                        com.example.contactlisttest.data contactLists = new ContactDAO()
+                        viewModel.addContactList(ContactDAO(
+                            name =  cursor.getString(0),
+                            phoneNumber = cursor.getString(1),
+                            photoUri = ""
+                        ))
 
-                        contactLists.setName(cursor.getString(0))
-                        contactLists.setNumber(cursor.getString(1))
-
-                        adapter.addItem(contactLists)
-                        recyclerView.setAdapter(adapter)
                         cursor.close()
                     }
                 }

@@ -8,6 +8,6 @@ data class UserDAO (
     val phoneNumber: String? = null,
     val imageUrl: String? = null,
     val fcmToken: String? = null,
-    val contactList: ArrayList<String>? = null,
+    val contactList: ArrayList<ContactDAO>? = null,
     val alertHistories: ArrayList<AlertHistoryDAO>? = null
 )

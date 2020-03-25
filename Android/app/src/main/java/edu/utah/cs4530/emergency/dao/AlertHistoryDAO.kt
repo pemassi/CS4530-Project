@@ -1,5 +1,6 @@
 package edu.utah.cs4530.emergency.dao
 
+import java.io.Serializable
 import java.util.*
 
 /**
@@ -13,7 +14,8 @@ data class AlertHistoryDAO(
     val latitude: Double,
     val longitude: Double,
     val contactedUserInformation: Array<UserDAO>
-) {
+): Serializable
+{
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

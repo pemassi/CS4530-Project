@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import edu.utah.cs4530.emergency.R
+import edu.utah.cs4530.emergency.component.picasso.RoundedTransformation
 import edu.utah.cs4530.emergency.dao.ContactDAO
 import edu.utah.cs4530.emergency.ui.contacts.ContactsAdapter.ItemViewHolder
-import java.util.*
 
-class ContactsAdapter : RecyclerView.Adapter<ItemViewHolder>() {
-    private val listData = ArrayList<ContactDAO>()
+class ContactsAdapter(private val listData: List<ContactDAO>) : RecyclerView.Adapter<ItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_contacts, parent, false)
@@ -27,27 +27,16 @@ class ContactsAdapter : RecyclerView.Adapter<ItemViewHolder>() {
         return listData.size
     }
 
-    fun addItem(ContactDAO: ContactDAO) {
-        listData.add(ContactDAO)
-    }
-
-    inner class ItemViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
-        private val name: TextView
-        private val number: TextView
-        private val imageView: ImageView
+    inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    {
+        private val name: TextView = itemView.findViewById(R.id.txt_contacts_name)
+        private val number: TextView = itemView.findViewById(R.id.txt_contacts_number)
+        private val imageView: ImageView = itemView.findViewById(R.id.imageView)
 
         fun onBind(contactDAO: ContactDAO) {
             name.text = contactDAO.name
-            number.text = contactDAO.number
-
-            imageView.setImageResource(contactDAO.photo)
-        }
-
-        init {
-            name = itemView.findViewById(R.id.txt_contacts_name)
-            number = itemView.findViewById(R.id.txt_contacts_number)
-            imageView = itemView.findViewById(R.id.imageView)
+            number.text = contactDAO.phoneNumber
+            Picasso.get().load(contactDAO.photoUri).transform(RoundedTransformation()).into(imageView)
         }
     }
 }
