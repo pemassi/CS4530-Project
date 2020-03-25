@@ -12,9 +12,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import edu.utah.cs4530.emergency.R
+import edu.utah.cs4530.emergency.extension.getLogger
 
 class MainActivity : AppCompatActivity() {
 
+    private val logger by getLogger()
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
