@@ -43,7 +43,7 @@
         </service>
 
         <!-- Google Map SDK API Key -->
-        <meta-ContactDAO
+        <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAFwLqx-VP5tDCDfXFtO_akv974A36MosY"/>
 
