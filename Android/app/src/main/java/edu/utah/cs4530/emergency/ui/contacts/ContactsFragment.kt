@@ -1,26 +1,19 @@
 package edu.utah.cs4530.emergency.ui.contacts
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import edu.utah.cs4530.emergency.R
-import edu.utah.cs4530.emergency.abstract.LiveModelFragment
-import kotlinx.android.synthetic.main.fragment_contacts.*
-import android.app.Activity
-import android.content.Intent
-import android.database.Cursor
-import android.provider.ContactsContract
-import android.view.View
-import android.view.View.OnClickListener
-import android.widget.Button
-import android.widget.TextView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.gun0912.tedonactivityresult.TedOnActivityResult
+import edu.utah.cs4530.emergency.R
+import edu.utah.cs4530.emergency.abstract.LiveModelFragment
+import edu.utah.cs4530.emergency.dao.ContactDAO
 import kotlinx.android.synthetic.main.fragment_contacts.view.*
-import kotlinx.android.synthetic.main.fragment_history.view.*
-import kotlinx.android.synthetic.main.fragment_history_detail.view.*
-import java.util.ArrayList
 
 
 class ContactsFragment : LiveModelFragment<ContactsViewModel>(ContactsViewModel::class, R.layout.fragment_contacts) {
@@ -34,47 +27,37 @@ class ContactsFragment : LiveModelFragment<ContactsViewModel>(ContactsViewModel:
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             itemAnimator = DefaultItemAnimator()
-
-            adapter =  ContactsAdapter()
         }
 
-        root.btn_contacts.setOnClickListener(Object.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setData(ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-                startActivityForResult(intent, PICK_CONTACT);
+        viewModel.contectList.observe(this, Observer {
+            root.contactsRecyclerView.adapter = ContactsAdapter(it)
+        })
 
+        root.btn_contacts.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.data = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
 
-            }
-        });
-    }
+            TedOnActivityResult.with(context)
+                .setIntent(intent)
+                .setListener { resultCode, data ->
+                    if(resultCode == RESULT_OK)
+                    {
+                        val cursor = context!!.contentResolver.query(data.data!!, arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                                ContactsContract.CommonDataKinds.Phone.NUMBER), null, null, null)!!
 
-    @Override
-    public void onActivityResult(int reqCode, int resultCode, Intent data) {
-        super.onActivityResult(reqCode, resultCode, data);
+                        cursor.moveToFirst()
 
+                        com.example.contactlisttest.data contactLists = new ContactDAO()
 
-        if(resultCode == RESULT_OK) {
-            Cursor cursor = getContentResolver().query(data.getData(),
-                new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                    ContactsContract.CommonDataKinds.Phone.NUMBER}, null, null, null);
+                        contactLists.setName(cursor.getString(0))
+                        contactLists.setNumber(cursor.getString(1))
 
-            cursor.moveToFirst();
-
-            com.example.contactlisttest.data contactLists = new data();
-
-            contactLists.setName(cursor.getString(0));
-            contactLists.setNumber(cursor.getString(1));
-
-            adapter.addItem(contactLists);
-            recyclerView.setAdapter(adapter);
-            cursor.close();
-
+                        adapter.addItem(contactLists)
+                        recyclerView.setAdapter(adapter)
+                        cursor.close()
+                    }
+                }
+                .startActivityForResult()
         }
     }
-
-    }
-
-
 }
