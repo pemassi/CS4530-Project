@@ -16,6 +16,7 @@ import com.gun0912.tedpermission.TedPermission
 import edu.utah.cs4530.emergency.R
 import edu.utah.cs4530.emergency.abstract.LiveModelFragment
 import edu.utah.cs4530.emergency.extension.getLogger
+import edu.utah.cs4530.emergency.global.Location
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
 
@@ -59,15 +60,17 @@ class HomeFragment : LiveModelFragment<HomeViewModel>(HomeViewModel::class, R.la
     }
 
     override fun onMapReady(map: GoogleMap) {
-        map.apply {
+        mMap = map.apply {
             uiSettings.apply {
                 isMyLocationButtonEnabled = false
                 isScrollGesturesEnabled = false
                 isZoomGesturesEnabled = false
                 isCompassEnabled = false
             }
+
+            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(Location.lastLocation, 15F)
+            moveCamera(cameraUpdate)
         }
-        mMap = map
 
         TedPermission.with(applicationContext)
             .setPermissionListener(this)
@@ -85,8 +88,6 @@ class HomeFragment : LiveModelFragment<HomeViewModel>(HomeViewModel::class, R.la
            }
            else
            {
-               val cameraUpdate = CameraUpdateFactory.newLatLngZoom(LatLng(37.56, 126.97), 15F)
-               it.moveCamera(cameraUpdate)
                it.isMyLocationEnabled = false
            }
        }
@@ -109,7 +110,8 @@ class HomeFragment : LiveModelFragment<HomeViewModel>(HomeViewModel::class, R.la
         override fun onLocationResult(locationResult: LocationResult?) {
             locationResult ?: return
 
-            val currentLatLng = LatLng(locationResult.locations.last().latitude, locationResult.locations.last().longitude)
+            Location.lastLocation = LatLng(locationResult.locations.last().latitude, locationResult.locations.last().longitude)
+            val currentLatLng = Location.lastLocation
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLatLng, 15F)
             mMap?.moveCamera(cameraUpdate)
         }

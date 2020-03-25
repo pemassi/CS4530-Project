@@ -23,7 +23,7 @@ android {
 
     defaultConfig {
         applicationId "edu.utah.cs4530.emergency"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         multiDexEnabled true
         versionCode buildTime()
@@ -96,10 +96,12 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
 
-    //Utils
+    //Permission Manager
     implementation 'gun0912.ted:tedonactivityresult:1.0.6'
     implementation 'gun0912.ted:tedpermission-rx2:2.2.3'
-    implementation 'rongi.rotate-layout:rotate-layout:3.0.0'
+
+    //Image Processing
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     //Livedata
     def lifecycle_version = "2.2.0"
