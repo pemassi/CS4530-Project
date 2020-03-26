@@ -38,7 +38,7 @@ class ContactsFragment : LiveModelFragment<ContactsViewModel>(ContactsViewModel:
         viewModel.contactList.observe(this, Observer {
             val adapter = ContactsAdapter(it, viewModel)
             root.contactsRecyclerView.adapter = adapter
-            ItemTouchHelper(ItemTouchHelperCallback(adapter));
+            ItemTouchHelper(ItemTouchHelperCallback(adapter)).attachToRecyclerView(root.contactsRecyclerView)
         })
 
         root.btn_addContacts.setOnClickListener {
