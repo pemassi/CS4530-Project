@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.ComputableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import edu.utah.cs4530.emergency.R
@@ -12,7 +14,9 @@ import edu.utah.cs4530.emergency.component.picasso.RoundedTransformation
 import edu.utah.cs4530.emergency.dao.ContactDAO
 import edu.utah.cs4530.emergency.ui.contacts.ContactsAdapter.ItemViewHolder
 
-class ContactsAdapter(private val listData: List<ContactDAO>) : RecyclerView.Adapter<ItemViewHolder>() {
+
+
+class ContactsAdapter(private val listData: List<ContactDAO>, private val viewModel: ContactsViewModel) : RecyclerView.Adapter<ItemViewHolder>(), ItemTouchHelperListener {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_contacts, parent, false)
@@ -20,12 +24,15 @@ class ContactsAdapter(private val listData: List<ContactDAO>) : RecyclerView.Ada
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.onBind(listData[position])
+        //holder.onBind(listData[position])
+        holder.onBind(viewModel.getContactList(position))
+
     }
 
     override fun getItemCount(): Int {
         return listData.size
     }
+
 
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
@@ -38,5 +45,22 @@ class ContactsAdapter(private val listData: List<ContactDAO>) : RecyclerView.Ada
             number.text = contactDAO.phoneNumber
             Picasso.get().load(contactDAO.photoUri).transform(RoundedTransformation()).into(imageView)
         }
+
+    }
+
+    override fun onItemSwipe(position: Int) {
+        viewModel.removeContactList(position);
+        notifyItemRemoved(position);
+    }
+
+    override fun onItemMove(from_position: Int, to_position: Int): Boolean {
+        //store item which will be moved
+        val temp = viewModel.getContactList(from_position);
+        //remove item which will be moved
+        viewModel.removeContactList(from_position);
+        viewModel.addContactList(temp, to_position);
+
+        notifyItemMoved(from_position, to_position);
+        return true;
     }
 }

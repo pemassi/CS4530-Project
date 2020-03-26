@@ -78,4 +78,6 @@ class ContactsViewModel : ViewModel() {
     override fun onCleared() {
         database.removeEventListener(contactListValueEventListener)
     }
+
+
 }

@@ -7,13 +7,18 @@ import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.gun0912.tedonactivityresult.TedOnActivityResult
 import edu.utah.cs4530.emergency.R
 import edu.utah.cs4530.emergency.abstract.LiveModelFragment
 import edu.utah.cs4530.emergency.dao.ContactDAO
+import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.fragment_contacts.view.*
+import kotlinx.android.synthetic.main.fragment_contacts.view.contactsRecyclerView
 
 
 class ContactsFragment : LiveModelFragment<ContactsViewModel>(ContactsViewModel::class, R.layout.fragment_contacts) {
@@ -23,6 +28,7 @@ class ContactsFragment : LiveModelFragment<ContactsViewModel>(ContactsViewModel:
         container: ViewGroup?,
         savedInstanceState: Bundle?)
     {
+
         root.contactsRecyclerView.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
@@ -30,13 +36,14 @@ class ContactsFragment : LiveModelFragment<ContactsViewModel>(ContactsViewModel:
         }
 
         viewModel.contactList.observe(this, Observer {
-            root.contactsRecyclerView.adapter = ContactsAdapter(it)
+            val adapter = ContactsAdapter(it, viewModel)
+            root.contactsRecyclerView.adapter = adapter
+            ItemTouchHelper(ItemTouchHelperCallback(adapter));
         })
 
-        root.btn_contacts.setOnClickListener {
+        root.btn_addContacts.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.data = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
-
             TedOnActivityResult.with(context)
                 .setIntent(intent)
                 .setListener { resultCode, data ->
@@ -44,9 +51,7 @@ class ContactsFragment : LiveModelFragment<ContactsViewModel>(ContactsViewModel:
                     {
                         applicationContext.contentResolver.query(data.data!!, arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                                 ContactsContract.CommonDataKinds.Phone.NUMBER), null, null, null)!!.use {
-
                             it.moveToFirst()
-
                             viewModel.addContactList(ContactDAO(
                                 name =  it.getString(0),
                                 phoneNumber = it.getString(1),
@@ -57,5 +62,6 @@ class ContactsFragment : LiveModelFragment<ContactsViewModel>(ContactsViewModel:
                 }
                 .startActivityForResult()
         }
+
     }
 }
