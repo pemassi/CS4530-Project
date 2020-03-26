@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.ComputableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import edu.utah.cs4530.emergency.R
@@ -13,7 +15,8 @@ import edu.utah.cs4530.emergency.dao.ContactDAO
 import edu.utah.cs4530.emergency.ui.contacts.ContactsAdapter.ItemViewHolder
 
 
-class ContactsAdapter(private val listData: List<ContactDAO>) : RecyclerView.Adapter<ItemViewHolder>(), ItemTouchHelperListener {
+
+class ContactsAdapter(private val listData: List<ContactDAO>, private val viewModel: ContactsViewModel) : RecyclerView.Adapter<ItemViewHolder>(), ItemTouchHelperListener {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_contacts, parent, false)
@@ -54,6 +57,9 @@ class ContactsAdapter(private val listData: List<ContactDAO>) : RecyclerView.Ada
         //store item which will be moved
         var temp = listData[from_position];
         //remove item which will be moved
+        viewModel.removeContactList(from_position);
+
+        viewModel.addContactList(to_position, temp);
 
     }
 }

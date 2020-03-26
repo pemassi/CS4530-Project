@@ -7,6 +7,7 @@ import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gun0912.tedonactivityresult.TedOnActivityResult
@@ -30,7 +31,7 @@ class ContactsFragment : LiveModelFragment<ContactsViewModel>(ContactsViewModel:
         }
 
         viewModel.contactList.observe(this, Observer {
-            root.contactsRecyclerView.adapter = ContactsAdapter(it)
+            root.contactsRecyclerView.adapter = ContactsAdapter(it, viewModel)
         })
 
         root.btn_addContacts.setOnClickListener {
