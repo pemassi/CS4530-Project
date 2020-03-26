@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.telcuon.appcard.restful.extension.Date
 import com.telcuon.appcard.restful.extension.toString
 import edu.utah.cs4530.emergency.R
 import edu.utah.cs4530.emergency.dao.AlertHistoryDAO
@@ -56,7 +57,7 @@ class HistoryAdaptor(private val dataList: List<AlertHistoryDAO>): RecyclerView.
                 getMapAsync(this@HistoryHolder)
             }
 
-            tvDetail.text = alertHistoryDAO.time.toString("yyyy/MM/dd HH:mm:ss")
+            tvDetail.text = Date(alertHistoryDAO.time, "yyyyMMddHHmmss").toString("yyyy/MM/dd HH:mm:ss")
             btnShowDetail.setOnClickListener {
                 val navController = Navigation.findNavController(view)
                 val navOptions = NavOptions.Builder().default().build()

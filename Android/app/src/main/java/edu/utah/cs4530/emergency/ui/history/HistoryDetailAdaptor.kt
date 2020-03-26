@@ -10,7 +10,7 @@ import com.squareup.picasso.Picasso
 import edu.utah.cs4530.emergency.R
 import edu.utah.cs4530.emergency.component.picasso.RoundedTransformation
 import edu.utah.cs4530.emergency.dao.AlertHistoryDAO
-import edu.utah.cs4530.emergency.dao.UserDAO
+import edu.utah.cs4530.emergency.dao.AlertHistoryUserDAO
 
 
 class HistoryDetailAdaptor(private val data: AlertHistoryDAO): RecyclerView.Adapter<HistoryDetailAdaptor.HistoryDetailHolder>()
@@ -21,11 +21,11 @@ class HistoryDetailAdaptor(private val data: AlertHistoryDAO): RecyclerView.Adap
         val tvEmail: TextView = view.findViewById(R.id.tv_email)
         val ivProfile: ImageView = view.findViewById(R.id.iv_profile)
 
-        fun setDao(userDAO: UserDAO)
+        fun setDao(alertHistoryUserDAO: AlertHistoryUserDAO)
         {
-            tvName.text = userDAO.name
-            tvEmail.text = userDAO.phoneNumber
-            Picasso.get().load(userDAO.imageUrl).transform(RoundedTransformation()).into(ivProfile)
+            tvName.text = alertHistoryUserDAO.name
+            tvEmail.text = alertHistoryUserDAO.phoneNumber
+            Picasso.get().load(alertHistoryUserDAO.imageUrl).transform(RoundedTransformation()).into(ivProfile)
         }
     }
 
@@ -35,9 +35,9 @@ class HistoryDetailAdaptor(private val data: AlertHistoryDAO): RecyclerView.Adap
         return HistoryDetailHolder(view)
     }
 
-    override fun getItemCount(): Int = data.contactedUserInformation.size
+    override fun getItemCount(): Int = data.contactedUserPhoneNumber.size
 
     override fun onBindViewHolder(holder: HistoryDetailHolder, position: Int) {
-        holder.setDao(data.contactedUserInformation[position])
+        holder.setDao(data.contactedUserPhoneNumber[position])
     }
 }

@@ -5,5 +5,5 @@ object DatabaseConst
     const val DOCUMENT_USERS = "users"
     const val ITEM_PHONE_NUMBER = "phoneNumber"
     const val ITEM_CONTACT_LIST = "contactList"
-    const val ITEM_HISTORIES = "histories"
+    const val ITEM_ALERT_HISTORIES = "alertHistories"
 }

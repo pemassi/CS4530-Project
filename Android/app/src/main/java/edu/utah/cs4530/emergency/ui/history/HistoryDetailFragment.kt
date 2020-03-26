@@ -11,6 +11,7 @@ import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.telcuon.appcard.restful.extension.Date
 import com.telcuon.appcard.restful.extension.toString
 import edu.utah.cs4530.emergency.R
 import edu.utah.cs4530.emergency.abstract.LiveModelFragment
@@ -43,7 +44,7 @@ class HistoryDetailFragment: LiveModelFragment<HistoryDetailViewModel>(HistoryDe
             getMapAsync(this@HistoryDetailFragment)
         }
 
-        root.tv_time.text = alertHistoryDAO.time.toString("yyyy/MM/dd HH:mm:ss")
+        root.tv_time.text = Date(alertHistoryDAO.time, "yyyyMMddHHmmss").toString("yyyy/MM/dd HH:mm:ss")
         root.contactedRecyclerView.adapter = HistoryDetailAdaptor(alertHistoryDAO)
     }
 

@@ -1,5 +1,6 @@
 package edu.utah.cs4530.emergency.ui.contacts
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.database.DataSnapshot
@@ -21,14 +22,16 @@ class ContactsViewModel : ViewModel() {
         .child(uid)
         .child(DatabaseConst.ITEM_CONTACT_LIST)
 
-    val contactList = MutableLiveData<ArrayList<ContactDAO>>(ArrayList())
+    private val _contactList = MutableLiveData<ArrayList<ContactDAO>>(ArrayList())
+    val contactList: LiveData<ArrayList<ContactDAO>>
+        get() = _contactList
 
-    private val userDaoValueEventListener = object: ValueEventListener {
+    private val contactListValueEventListener = object: ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             logger.debug("Data updated [$dataSnapshot]")
 
             //Map object to ArrayList of ContactDAO.
-            contactList.value = ArrayList(dataSnapshot.children.map {it.getValue(ContactDAO::class.java) ?: throw Exception("Fail to convert object to ContactDAO")})
+            _contactList.value = ArrayList(dataSnapshot.children.map {it.getValue(ContactDAO::class.java) ?: throw Exception("Fail to convert object to ContactDAO")})
         }
 
         override fun onCancelled(error: DatabaseError) {
@@ -39,7 +42,7 @@ class ContactsViewModel : ViewModel() {
 
     init
     {
-        database.addValueEventListener(userDaoValueEventListener)
+        database.addValueEventListener(contactListValueEventListener)
     }
 
     /**
@@ -49,7 +52,7 @@ class ContactsViewModel : ViewModel() {
      */
     fun addContactList(newContactDAO: ContactDAO, pos: Int = -1)
     {
-        database.setValue(contactList.value!!.apply{
+        database.setValue(_contactList.value!!.apply{
             if(pos == -1)
                 this.add(newContactDAO)
             else
@@ -59,20 +62,20 @@ class ContactsViewModel : ViewModel() {
 
     fun getContactList(pos: Int): ContactDAO
     {
-        return contactList.value!![pos]
+        return _contactList.value!![pos]
     }
 
     fun sizeContactList(): Int
     {
-        return contactList.value!!.size
+        return _contactList.value!!.size
     }
 
     fun removeContactList(pos: Int)
     {
-        database.setValue(contactList.value!!.apply { this.removeAt(pos) })
+        database.setValue(_contactList.value!!.apply { this.removeAt(pos) })
     }
 
     override fun onCleared() {
-        database.removeEventListener(userDaoValueEventListener)
+        database.removeEventListener(contactListValueEventListener)
     }
 }
