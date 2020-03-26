@@ -3,6 +3,7 @@ package edu.utah.cs4530.emergency.service
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import edu.utah.cs4530.emergency.extension.getLogger
+import edu.utah.cs4530.emergency.repository.DeviceRepository
 
 class FirebaseMessagingService : FirebaseMessagingService() {
 
@@ -41,20 +42,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
      */
     override fun onNewToken(token: String) {
         logger.info("Refreshed token: $token")
-
-        sendRegistrationToServer(token)
+        DeviceRepository.fcmToken = token
     }
 
-    /**
-     * Persist token to third-party servers.
-     *
-     * Modify this method to associate the user's FCM InstanceID token with any server-side account
-     * maintained by your application.
-     *
-     * @param token The new token.
-     */
-    private fun sendRegistrationToServer(token: String?) {
-        TODO("Implement this method to send token to your app server.")
-        logger.info("sendRegistrationTokenToServer($token)")
-    }
 }

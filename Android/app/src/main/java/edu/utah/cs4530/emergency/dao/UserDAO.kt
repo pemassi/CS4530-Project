@@ -4,10 +4,10 @@ import com.google.firebase.database.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 data class UserDAO (
-    val name: String? = null,
-    val phoneNumber: String? = null,
-    val imageUrl: String? = null,
-    val fcmToken: String? = null,
-    val contactList: ArrayList<ContactDAO>? = null,
-    val alertHistories: ArrayList<AlertHistoryDAO>? = null
+    var name: String? = null,
+    var phoneNumber: String? = null,
+    var imageUrl: String? = null,
+    var fcmToken: String? = null,
+    var contactList: ArrayList<ContactDAO> = ArrayList(),
+    var alertHistories: ArrayList<AlertHistoryDAO> = ArrayList()
 )
