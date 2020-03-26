@@ -33,10 +33,9 @@ class ContactsFragment : LiveModelFragment<ContactsViewModel>(ContactsViewModel:
             root.contactsRecyclerView.adapter = ContactsAdapter(it)
         })
 
-        root.btn_contacts.setOnClickListener {
+        root.btn_addContacts.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.data = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
-
             TedOnActivityResult.with(context)
                 .setIntent(intent)
                 .setListener { resultCode, data ->
@@ -44,9 +43,7 @@ class ContactsFragment : LiveModelFragment<ContactsViewModel>(ContactsViewModel:
                     {
                         applicationContext.contentResolver.query(data.data!!, arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                                 ContactsContract.CommonDataKinds.Phone.NUMBER), null, null, null)!!.use {
-
                             it.moveToFirst()
-
                             viewModel.addContactList(ContactDAO(
                                 name =  it.getString(0),
                                 phoneNumber = it.getString(1),
@@ -57,5 +54,6 @@ class ContactsFragment : LiveModelFragment<ContactsViewModel>(ContactsViewModel:
                 }
                 .startActivityForResult()
         }
+
     }
 }

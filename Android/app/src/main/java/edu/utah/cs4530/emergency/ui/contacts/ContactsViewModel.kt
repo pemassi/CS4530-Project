@@ -32,4 +32,6 @@ class ContactsViewModel : ViewModel() {
         _contactList.add(newContactDAO)
         contactList.value = _contactList
     }
+
+
 }
