@@ -50,16 +50,17 @@ class ContactsAdapter(private val listData: List<ContactDAO>, private val viewMo
     }
 
     override fun onItemSwipe(position: Int) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onItemMove(from_position: Int, to_position: Int): Boolean {
         //store item which will be moved
-        var temp = listData[from_position];
+        val temp;
         //remove item which will be moved
         viewModel.removeContactList(from_position);
+        viewModel.addContactList(temp, to_position);
 
-        viewModel.addContactList(to_position, temp);
-
+        notifyItemMoved(from_position, to_position);
+        return true;
     }
 }
