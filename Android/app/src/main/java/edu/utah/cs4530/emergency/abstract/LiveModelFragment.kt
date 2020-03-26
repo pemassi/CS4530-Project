@@ -9,10 +9,12 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import kotlin.reflect.KClass
 
 abstract class LiveModelFragment<T : ViewModel>(private val modelClass: KClass<T>, @LayoutRes private val layoutRes: Int): Fragment()
 {
+
     protected lateinit var applicationContext: Context
     protected lateinit var root: View
     protected lateinit var viewModel: T
