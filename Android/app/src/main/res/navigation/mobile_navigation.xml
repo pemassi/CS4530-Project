@@ -40,4 +40,10 @@
         android:name="edu.utah.cs4530.emergency.ui.send.SendFragment"
         android:label="@string/menu_send"
         tools:layout="@layout/fragment_send" />
+
+    <fragment
+        android:id="@+id/nav_editmessage"
+        android:name="edu.utah.cs4530.emergency.ui.editmessage.EditMessageFragment"
+        android:label="Edit Message"
+        tools:layout="@layout/edit_message_fragment" />
 </navigation>

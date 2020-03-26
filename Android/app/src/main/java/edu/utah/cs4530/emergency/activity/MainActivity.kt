@@ -2,6 +2,10 @@ package edu.utah.cs4530.emergency.activity
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -14,10 +18,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import edu.utah.cs4530.emergency.R
+import edu.utah.cs4530.emergency.ui.editmessage.EditMessageFragment
+import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var inputText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,5 +65,13 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    // Edit Custom Message Fragment Methods
+    fun saveCustomMessage(view: View) {
+        var saveButton: Button = view.findViewById(R.id.save_button);
+        // This keeps showing up null
+        var messageText: EditText = view.findViewById(R.id.message_text);
+        saveButton.text = "Success!";
     }
 }
