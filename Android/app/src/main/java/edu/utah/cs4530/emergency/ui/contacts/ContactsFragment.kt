@@ -42,18 +42,17 @@ class ContactsFragment : LiveModelFragment<ContactsViewModel>(ContactsViewModel:
                 .setListener { resultCode, data ->
                     if(resultCode == RESULT_OK)
                     {
-                        val cursor = context!!.contentResolver.query(data.data!!, arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                                ContactsContract.CommonDataKinds.Phone.NUMBER), null, null, null)!!
+                        applicationContext.contentResolver.query(data.data!!, arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                                ContactsContract.CommonDataKinds.Phone.NUMBER), null, null, null)!!.use {
 
-                        cursor.moveToFirst()
+                            it.moveToFirst()
 
-                        viewModel.addContactList(ContactDAO(
-                            name =  cursor.getString(0),
-                            phoneNumber = cursor.getString(1),
-                            photoUri = ""
-                        ))
-
-                        cursor.close()
+                            viewModel.addContactList(ContactDAO(
+                                name =  it.getString(0),
+                                phoneNumber = it.getString(1),
+                                photoUri = null
+                            ))
+                        }
                     }
                 }
                 .startActivityForResult()
