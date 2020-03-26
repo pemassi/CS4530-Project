@@ -26,7 +26,9 @@ class ContactsViewModel : ViewModel() {
     private val userDaoValueEventListener = object: ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             logger.debug("Data updated [$dataSnapshot]")
-            contactList.value = ArrayList(dataSnapshot.children.map {it.getValue(ContactDAO::class.java)!!})
+
+            //Map object to ArrayList of ContactDAO.
+            contactList.value = ArrayList(dataSnapshot.children.map {it.getValue(ContactDAO::class.java) ?: throw Exception("Fail to convert object to ContactDAO")})
         }
 
         override fun onCancelled(error: DatabaseError) {
@@ -40,9 +42,19 @@ class ContactsViewModel : ViewModel() {
         database.addValueEventListener(userDaoValueEventListener)
     }
 
-    fun addContactList(newContactDAO: ContactDAO)
+    /**
+     * Add new contact
+     *
+     * @param pos If pos is -1, will be added at the end.
+     */
+    fun addContactList(newContactDAO: ContactDAO, pos: Int = -1)
     {
-        database.setValue(contactList.value!!.apply{this.add(newContactDAO)})
+        database.setValue(contactList.value!!.apply{
+            if(pos == -1)
+                this.add(newContactDAO)
+            else
+                this.add(pos, newContactDAO)
+        })
     }
 
     fun removeContactList(pos: Int)
