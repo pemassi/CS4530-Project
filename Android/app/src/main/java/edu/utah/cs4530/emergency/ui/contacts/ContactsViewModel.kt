@@ -57,6 +57,16 @@ class ContactsViewModel : ViewModel() {
         })
     }
 
+    fun getContactList(pos: Int): ContactDAO
+    {
+        return contactList.value!![pos]
+    }
+
+    fun sizeContactList(): Int
+    {
+        return contactList.value!!.size
+    }
+
     fun removeContactList(pos: Int)
     {
         database.setValue(contactList.value!!.apply { this.removeAt(pos) })
