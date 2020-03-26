@@ -24,7 +24,9 @@ class ContactsAdapter(private val listData: List<ContactDAO>, private val viewMo
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.onBind(listData[position])
+        //holder.onBind(listData[position])
+        holder.onBind(viewModel.getContactList(position))
+
     }
 
     override fun getItemCount(): Int {
@@ -34,12 +36,9 @@ class ContactsAdapter(private val listData: List<ContactDAO>, private val viewMo
 
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
-
         private val name: TextView = itemView.findViewById(R.id.txt_contacts_name)
         private val number: TextView = itemView.findViewById(R.id.txt_contacts_number)
         private val imageView: ImageView = itemView.findViewById(R.id.imageView)
-
-
 
         fun onBind(contactDAO: ContactDAO) {
             name.text = contactDAO.name
@@ -50,12 +49,13 @@ class ContactsAdapter(private val listData: List<ContactDAO>, private val viewMo
     }
 
     override fun onItemSwipe(position: Int) {
-
+        viewModel.removeContactList(position);
+        notifyItemRemoved(position);
     }
 
     override fun onItemMove(from_position: Int, to_position: Int): Boolean {
         //store item which will be moved
-        val temp;
+        val temp = viewModel.getContactList(from_position);
         //remove item which will be moved
         viewModel.removeContactList(from_position);
         viewModel.addContactList(temp, to_position);
