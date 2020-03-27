@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageButton
+     <ImageButton
         android:id="@+id/btn_googleLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#00"
+        android:background="#00000000"
         android:src="@drawable/btn_google_signin_light_normal_web"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

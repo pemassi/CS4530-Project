@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.gun0912.tedonactivityresult.TedOnActivityResult
 import edu.utah.cs4530.emergency.R
+import edu.utah.cs4530.emergency.const.OAuthConst
 import edu.utah.cs4530.emergency.dao.UserDAO
 import edu.utah.cs4530.emergency.extension.getLogger
 import edu.utah.cs4530.emergency.repository.DeviceRepository
@@ -34,7 +35,7 @@ class LoginActivity: AppCompatActivity()
         setContentView(R.layout.activity_login)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken(OAuthConst.GoogleApiClientId)
             .requestEmail()
             .build()
 
@@ -90,7 +91,7 @@ class LoginActivity: AppCompatActivity()
         UserRepository.getUserOnce(firebaseUser.uid) { result: Boolean, userDAO: UserDAO?, exception: Exception? ->
             if(result)
             {
-                UserRepository.setUser(firebaseUser.uid, userDAO!!.apply {
+                UserRepository.setUser(firebaseUser.uid, (userDAO ?: UserDAO()).apply {
                     name = firebaseUser.displayName
                     phoneNumber = DeviceInfo.phoneNumber
                     imageUrl = firebaseUser.photoUrl.toString()
