@@ -16,7 +16,7 @@ import edu.utah.cs4530.emergency.repository.UserRepository
 class ContactsViewModel : ViewModel() {
     private val logger by getLogger()
 
-    private val uid = UserRepository.getFirebaseUser()?.uid ?: "test" //throw Exception("User is not logged-in")
+    private val uid = UserRepository.getFirebaseUser()?.uid ?: throw Exception("User is not logged-in")
     private val database = Firebase.database.reference
         .child(DatabaseConst.DOCUMENT_USERS)
         .child(uid)
