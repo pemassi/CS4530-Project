@@ -1,28 +1,20 @@
 package edu.utah.cs4530.emergency.ui.contacts
 
 import android.app.Activity.RESULT_OK
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.gun0912.tedonactivityresult.TedOnActivityResult
 import edu.utah.cs4530.emergency.R
 import edu.utah.cs4530.emergency.abstract.LiveModelFragment
 import edu.utah.cs4530.emergency.dao.ContactDAO
-import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.fragment_contacts.view.*
-import kotlinx.android.synthetic.main.fragment_contacts.view.contactsRecyclerView
-
 
 class ContactsFragment : LiveModelFragment<ContactsViewModel>(ContactsViewModel::class, R.layout.fragment_contacts) {
 

@@ -1,24 +1,16 @@
 package edu.utah.cs4530.emergency.ui.contacts
 
-import android.app.AlertDialog
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.lifecycle.ComputableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import edu.utah.cs4530.emergency.EmergencyApplication.Companion.context
 import edu.utah.cs4530.emergency.R
 import edu.utah.cs4530.emergency.component.picasso.RoundedTransformation
 import edu.utah.cs4530.emergency.dao.ContactDAO
 import edu.utah.cs4530.emergency.ui.contacts.ContactsAdapter.ItemViewHolder
-
-
 
 class ContactsAdapter(private val listData: List<ContactDAO>, private val viewModel: ContactsViewModel) : RecyclerView.Adapter<ItemViewHolder>(), ItemTouchHelperListener {
 
