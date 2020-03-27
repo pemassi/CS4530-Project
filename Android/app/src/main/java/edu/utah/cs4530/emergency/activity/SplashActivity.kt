@@ -24,8 +24,6 @@ class SplashActivity: AppCompatActivity(), PermissionListener
                 Manifest.permission.READ_PHONE_STATE
             )
             .check()
-
-
     }
 
     override fun onPermissionGranted() {

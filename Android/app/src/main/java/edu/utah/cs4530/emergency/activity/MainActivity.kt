@@ -42,11 +42,7 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.nav_home,
                 R.id.nav_contacts,
-                R.id.nav_history,
-                R.id.nav_slideshow,
-                R.id.nav_tools,
-                R.id.nav_share,
-                R.id.nav_send
+                R.id.nav_history
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -54,9 +50,10 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.userDao.observe(this, Observer {
             it?.let {
-                navView.tv_name.text = it.name
-                navView.tv_email.text = it.phoneNumber
-                Picasso.get().load(it.imageUrl).transform(RoundedTransformation()).into(navView.iv_profile)
+                val headerView = navView.getHeaderView(0)
+                headerView.tv_name.text = it.name
+                headerView.tv_email.text = it.phoneNumber
+                Picasso.get().load(it.imageUrl).transform(RoundedTransformation()).into(headerView.iv_profile)
             }
         })
     }
