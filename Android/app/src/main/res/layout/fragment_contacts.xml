@@ -7,33 +7,31 @@
     android:orientation="vertical">
 
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_addContacts"
-        android:layout_width="80dp"
-        android:layout_height="40dp"
+        android:layout_width="42dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="4dp"
+        android:background="#FFFFFF"
+        android:src="@drawable/ic_plus"
         android:text="@string/Set_cnct"
         app:layout_constraintStart_toStartOf="@+id/contactsRecyclerView"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_deleteContacts"
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        android:text="Delete"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contactsRecyclerView"
-        android:layout_width="409dp"
-        android:layout_height="684dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
         android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.008"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_deleteContacts" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/btn_addContacts"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
