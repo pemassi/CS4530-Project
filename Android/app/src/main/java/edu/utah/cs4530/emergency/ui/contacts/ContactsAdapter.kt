@@ -46,21 +46,36 @@ class ContactsAdapter(private val listData: List<ContactDAO>, private val viewMo
             Picasso.get().load(contactDAO.photoUri).transform(RoundedTransformation()).into(imageView)
         }
 
+        val deleteBtn: View = itemView.findViewById(R.id.btn_deleteItem)
+
+        init {
+            deleteBtn.setOnClickListener(remove())
+        }
+
+        private fun remove(): (View) -> Unit = {
+            layoutPosition.also {
+                adapterPosition -> viewModel.removeContactList(adapterPosition)
+                notifyDataSetChanged()
+            }
+        }
+
+
     }
 
+
     override fun onItemSwipe(position: Int) {
-        viewModel.removeContactList(position);
-        notifyItemRemoved(position);
+        viewModel.removeContactList(position)
+        notifyItemRemoved(position)
     }
 
     override fun onItemMove(from_position: Int, to_position: Int): Boolean {
         //store item which will be moved
-        val temp = viewModel.getContactList(from_position);
+        val temp = viewModel.getContactList(from_position)
         //remove item which will be moved
-        viewModel.removeContactList(from_position);
-        viewModel.addContactList(temp, to_position);
+        viewModel.removeContactList(from_position)
+        viewModel.addContactList(temp, to_position)
 
-        notifyItemMoved(from_position, to_position);
-        return true;
+        notifyItemMoved(from_position, to_position)
+        return true
     }
 }

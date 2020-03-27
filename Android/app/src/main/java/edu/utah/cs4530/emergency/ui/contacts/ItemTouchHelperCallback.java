@@ -37,4 +37,6 @@ public class ItemTouchHelperCallback extends ItemTouchHelper.Callback {
         listener.onItemSwipe(viewHolder.getAdapterPosition());
 
     }
+
+
 }

@@ -1,10 +1,12 @@
 package edu.utah.cs4530.emergency.ui.contacts
 
 import android.app.Activity.RESULT_OK
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -62,6 +64,10 @@ class ContactsFragment : LiveModelFragment<ContactsViewModel>(ContactsViewModel:
                 }
                 .startActivityForResult()
         }
+
+
+
+
 
     }
 }
