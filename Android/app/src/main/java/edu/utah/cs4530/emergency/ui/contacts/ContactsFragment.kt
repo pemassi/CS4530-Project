@@ -8,6 +8,7 @@ import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -52,17 +53,18 @@ class ContactsFragment : LiveModelFragment<ContactsViewModel>(ContactsViewModel:
                     if(resultCode == RESULT_OK)
                     {
                         applicationContext.contentResolver.query(data.data!!, arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                                ContactsContract.CommonDataKinds.Phone.NUMBER), null, null, null)!!.use {
+                                ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.PHOTO_URI), null, null, null)!!.use {
                             it.moveToFirst()
                             viewModel.addContactList(ContactDAO(
                                 name =  it.getString(0),
                                 phoneNumber = it.getString(1),
-                                photoUri = null
+                                photoUri = it.getString(2)
                             ))
                         }
                     }
                 }
                 .startActivityForResult()
+
         }
 
 

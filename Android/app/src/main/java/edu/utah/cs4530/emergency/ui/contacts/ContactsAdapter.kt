@@ -1,14 +1,18 @@
 package edu.utah.cs4530.emergency.ui.contacts
 
+import android.app.AlertDialog
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ComputableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import edu.utah.cs4530.emergency.EmergencyApplication.Companion.context
 import edu.utah.cs4530.emergency.R
 import edu.utah.cs4530.emergency.component.picasso.RoundedTransformation
 import edu.utah.cs4530.emergency.dao.ContactDAO
@@ -34,6 +38,8 @@ class ContactsAdapter(private val listData: List<ContactDAO>, private val viewMo
     }
 
 
+
+
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
         private val name: TextView = itemView.findViewById(R.id.txt_contacts_name)
@@ -46,22 +52,19 @@ class ContactsAdapter(private val listData: List<ContactDAO>, private val viewMo
             Picasso.get().load(contactDAO.photoUri).transform(RoundedTransformation()).into(imageView)
         }
 
-        val deleteBtn: View = itemView.findViewById(R.id.btn_deleteItem)
-
+        private val deleteBtn: View = itemView.findViewById(R.id.btn_deleteItem)
         init {
             deleteBtn.setOnClickListener(remove())
         }
 
         private fun remove(): (View) -> Unit = {
+
             layoutPosition.also {
                 adapterPosition -> viewModel.removeContactList(adapterPosition)
                 notifyDataSetChanged()
             }
         }
-
-
     }
-
 
     override fun onItemSwipe(position: Int) {
         viewModel.removeContactList(position)
