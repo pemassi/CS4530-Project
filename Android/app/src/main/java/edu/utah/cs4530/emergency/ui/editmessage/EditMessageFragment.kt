@@ -28,14 +28,14 @@ class EditMessageFragment : LiveModelFragment<EditMessageViewModel>(EditMessageV
         savedInstanceState: Bundle?)
     {
         root.message_text.setText("This is an emergency message that will be sent to every one on your contact list")
-
+        editMessageInput = root.findViewById(R.id.message_text)
         root.save_button.setOnClickListener {
             TedOnActivityResult.with(context)
                 .setListener { resultCode, data ->
                     if(resultCode == RESULT_OK) {
                         viewModel.saveEmergencyMessage(
                             EmergencyMessageDAO(
-                            emergencyText = it.getString(0)
+                            emergencyText = editMessageInput.text.toString()
                         ))
                     }
                 }

@@ -47,14 +47,14 @@ class EditMessageViewModel : ViewModel() {
     }
 
     fun saveEmergencyMessage(newMessage: EmergencyMessageDAO) {
-        database.setValue(_emergencyMessage.value!!.apply{this.add(newMessage)})
+        database.setValue(_emergencyMessage.value)
     }
 
-    fun getEmergencyMessage(){
-        return _emergencyMessage.value
-    }
-
-    fun getEmergencyMessageLength(): Int{
-        return _emergencyMessage.value!!.size
-    }
+//    fun getEmergencyMessage(){
+//        return database.child(_emergencyMessage.value.toString()).getValue();
+//    }
+//
+//    fun getEmergencyMessageLength(): Int{
+//        return _emergencyMessage.value!!.size
+//    }
 }
