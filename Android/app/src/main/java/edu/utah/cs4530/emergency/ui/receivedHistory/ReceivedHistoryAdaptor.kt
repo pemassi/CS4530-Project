@@ -14,19 +14,19 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.telcuon.appcard.restful.extension.Date
 import com.telcuon.appcard.restful.extension.toString
 import edu.utah.cs4530.emergency.R
-import edu.utah.cs4530.emergency.dao.AlertHistoryDAO
+import edu.utah.cs4530.emergency.dao.AlertReceivedHistoryDAO
 import edu.utah.cs4530.emergency.extension.default
 
 
-class HistoryAdaptor(private val dataList: List<AlertHistoryDAO>): RecyclerView.Adapter<HistoryAdaptor.HistoryHolder>()
+class ReceivedHistoryAdaptor(private val dataList: List<AlertReceivedHistoryDAO>): RecyclerView.Adapter<ReceivedHistoryAdaptor.ReceivedHistoryHolder>()
 {
-    inner class HistoryHolder(private val view: View) : RecyclerView.ViewHolder(view), OnMapReadyCallback
+    inner class ReceivedHistoryHolder(private val view: View) : RecyclerView.ViewHolder(view), OnMapReadyCallback
     {
         val tvDetail: TextView = view.findViewById(R.id.tv_detail)
         val btnShowDetail: Button = view.findViewById(R.id.btn_showDetail)
         val mapView: MapView = view.findViewById(R.id.mapView)
 
-        lateinit var alertHistoryDAO: AlertHistoryDAO
+        lateinit var alertHistoryDAO: AlertReceivedHistoryDAO
 
         override fun onMapReady(map: GoogleMap) {
             map.apply {
@@ -45,7 +45,7 @@ class HistoryAdaptor(private val dataList: List<AlertHistoryDAO>): RecyclerView.
             }
         }
 
-        fun setDao(alertHistoryDAO: AlertHistoryDAO)
+        fun setDao(alertHistoryDAO: AlertReceivedHistoryDAO)
         {
             this.alertHistoryDAO = alertHistoryDAO
 
@@ -54,27 +54,27 @@ class HistoryAdaptor(private val dataList: List<AlertHistoryDAO>): RecyclerView.
                 onCreate(null)
                 onResume()
                 MapsInitializer.initialize(view.context)
-                getMapAsync(this@HistoryHolder)
+                getMapAsync(this@ReceivedHistoryHolder)
             }
 
             tvDetail.text = Date(alertHistoryDAO.time, "yyyy-MM-dd'T'HH:mm:ss.SSSXXX").toString("yyyy/MM/dd HH:mm:ss")
             btnShowDetail.setOnClickListener {
                 val navController = Navigation.findNavController(view)
                 val navOptions = NavOptions.Builder().default().build()
-                navController.navigate(R.id.nav_history_detail, HistoryDetailFragment.makeBundle(alertHistoryDAO), navOptions)
+                navController.navigate(R.id.nav_received_history_detail, ReceivedHistoryDetailFragment.makeBundle(alertHistoryDAO), navOptions)
             }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReceivedHistoryHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_history, parent, false)
 
-        return HistoryHolder(view)
+        return ReceivedHistoryHolder(view)
     }
 
     override fun getItemCount(): Int = dataList.size
 
-    override fun onBindViewHolder(holder: HistoryHolder, position: Int) {
+    override fun onBindViewHolder(holder: ReceivedHistoryHolder, position: Int) {
         holder.setDao(dataList[position])
     }
 }

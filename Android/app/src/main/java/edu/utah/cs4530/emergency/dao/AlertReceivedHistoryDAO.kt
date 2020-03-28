@@ -2,7 +2,6 @@ package edu.utah.cs4530.emergency.dao
 
 import com.google.firebase.database.IgnoreExtraProperties
 import java.io.Serializable
-import java.util.*
 
 /**
  * AlertHistoryDAO
@@ -10,10 +9,9 @@ import java.util.*
  * This data object has alert historical data.
  */
 @IgnoreExtraProperties
-data class AlertHistoryDAO(
+data class AlertReceivedHistoryDAO(
     val time: String = "",
     val latitude: Double = 0.0,
     val longitude: Double = 0.0,
-    val contactedUserPhoneNumber: HashMap<String, AlertHistoryUserDAO> = HashMap()
+    val contactedUserPhoneNumber: AlertHistoryUserDAO = AlertHistoryUserDAO()
 ): Serializable
-

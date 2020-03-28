@@ -2,6 +2,7 @@ package edu.utah.cs4530.emergency.ui.home
 
 import android.Manifest
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -17,6 +18,8 @@ import edu.utah.cs4530.emergency.R
 import edu.utah.cs4530.emergency.abstract.LiveModelFragment
 import edu.utah.cs4530.emergency.extension.getLogger
 import edu.utah.cs4530.emergency.global.Location
+import edu.utah.cs4530.emergency.service.CloudFunctions
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
 
@@ -45,6 +48,26 @@ class HomeFragment : LiveModelFragment<HomeViewModel>(HomeViewModel::class, R.la
         }
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context!!)
+
+        root.btn_sos.setOnSwipeListener {
+            Handler().postDelayed({
+                CloudFunctions.sendEmergencyMessage(
+                        Location.lastLocation.latitude,
+                        Location.lastLocation.longitude
+                    )
+                    .continueWith {
+                        if(it.isSuccessful)
+                        {
+                            btn_sos.showResultIcon(true, true)
+                        }
+                        else
+                        {
+                            logger.debug(it.exception.toString())
+                            btn_sos.showResultIcon(true, true)
+                        }
+                    }
+            }, 2000)
+        }
     }
 
     override fun onResume() {

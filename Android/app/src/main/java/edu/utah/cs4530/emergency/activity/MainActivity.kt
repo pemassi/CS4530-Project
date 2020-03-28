@@ -13,10 +13,13 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
 import edu.utah.cs4530.emergency.R
 import edu.utah.cs4530.emergency.component.picasso.RoundedTransformation
 import edu.utah.cs4530.emergency.extension.getLogger
+import edu.utah.cs4530.emergency.repository.DeviceRepository
+import edu.utah.cs4530.emergency.repository.UserRepository
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 
 class MainActivity : AppCompatActivity() {
@@ -24,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     private val logger by getLogger()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var viewModel: MainViewModel
+
+    private var isFcmTokenUpdated = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +47,8 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.nav_home,
                 R.id.nav_contacts,
-                R.id.nav_history
+                R.id.nav_history,
+                R.id.nav_received_history
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -54,6 +60,12 @@ class MainActivity : AppCompatActivity() {
                 headerView.tv_name.text = it.name
                 headerView.tv_email.text = it.phoneNumber
                 Picasso.get().load(it.imageUrl).transform(RoundedTransformation()).into(headerView.iv_profile)
+
+                if(!isFcmTokenUpdated){
+                    it.fcmToken = DeviceRepository.fcmToken
+                    UserRepository.setUser(FirebaseAuth.getInstance().uid!!, it)
+                    isFcmTokenUpdated = true
+                }
             }
         })
     }

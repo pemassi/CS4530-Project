@@ -2,18 +2,29 @@ package edu.utah.cs4530.emergency.activity
 
 import android.Manifest
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
+import com.tcodevice.card.tada.consts.NotificationConst
 import edu.utah.cs4530.emergency.R
+import edu.utah.cs4530.emergency.util.EzNotification
 
 class SplashActivity: AppCompatActivity(), PermissionListener
 {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            EzNotification.createChannel(
+                applicationContext,
+                NotificationConst.EMERGENCY,
+                NotificationConst.EMERGENCY_NAME, EzNotification.IMPORTANCE_HIGH
+            )
+        }
 
         TedPermission.with(applicationContext)
             .setPermissionListener(this)

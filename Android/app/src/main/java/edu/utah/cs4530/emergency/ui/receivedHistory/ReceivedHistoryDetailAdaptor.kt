@@ -12,9 +12,9 @@ import edu.utah.cs4530.emergency.component.picasso.RoundedTransformation
 import edu.utah.cs4530.emergency.dao.AlertHistoryUserDAO
 
 
-class HistoryDetailAdaptor(private val data: List<AlertHistoryUserDAO>): RecyclerView.Adapter<HistoryDetailAdaptor.HistoryDetailHolder>()
+class ReceivedHistoryDetailAdaptor(private val data: List<AlertHistoryUserDAO>): RecyclerView.Adapter<ReceivedHistoryDetailAdaptor.ReceivedHistoryDetailHolder>()
 {
-    inner class HistoryDetailHolder(private val view: View) : RecyclerView.ViewHolder(view)
+    inner class ReceivedHistoryDetailHolder(private val view: View) : RecyclerView.ViewHolder(view)
     {
         val tvName: TextView = view.findViewById(R.id.tv_name)
         val tvEmail: TextView = view.findViewById(R.id.tv_email)
@@ -28,15 +28,15 @@ class HistoryDetailAdaptor(private val data: List<AlertHistoryUserDAO>): Recycle
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryDetailHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReceivedHistoryDetailHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_contacted, parent, false)
 
-        return HistoryDetailHolder(view)
+        return ReceivedHistoryDetailHolder(view)
     }
 
     override fun getItemCount(): Int = data.size
 
-    override fun onBindViewHolder(holder: HistoryDetailHolder, position: Int) {
+    override fun onBindViewHolder(holder: ReceivedHistoryDetailHolder, position: Int) {
         holder.setDao(data[position])
     }
 }

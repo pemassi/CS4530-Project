@@ -1,9 +1,15 @@
 package edu.utah.cs4530.emergency.service
 
+import android.app.Notification
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.tcodevice.card.tada.consts.NotificationConst
+import edu.utah.cs4530.emergency.R
+import edu.utah.cs4530.emergency.activity.SplashActivity
 import edu.utah.cs4530.emergency.extension.getLogger
 import edu.utah.cs4530.emergency.repository.DeviceRepository
+import edu.utah.cs4530.emergency.util.EzNotification
+
 
 class FirebaseMessagingService : FirebaseMessagingService() {
 
@@ -23,12 +29,27 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         // Check if message contains a data payload.
         remoteMessage.data.isNotEmpty().let {
             logger.debug("Message data payload: " + remoteMessage.data)
-
+            val latitude = remoteMessage.data["latitude"]
+            val longitude = remoteMessage.data["longitude"]
+            val emergencyMessage = remoteMessage.data["emergencyMessage"]
+            val name = remoteMessage.data["name"]
+            val phoneNumber = remoteMessage.data["phoneNumber"]
+            val imageUrl = remoteMessage.data["imageUrl"]
         }
 
         // Check if message contains a notification payload.
         remoteMessage.notification?.let {
             logger.debug("Message Notification Body: ${it.body}")
+
+            EzNotification(applicationContext, NotificationConst.EMERGENCY).apply {
+                setIcon(R.drawable.ic_announcement_black_24dp)
+                setTitle(it.title!!)
+                setMessage(it.body!!)
+                setVisibility(Notification.VISIBILITY_PUBLIC)
+                setIntent(SplashActivity::class.java)
+                setNotiToUser(true)
+                setWakeUp()
+            }.show()
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM

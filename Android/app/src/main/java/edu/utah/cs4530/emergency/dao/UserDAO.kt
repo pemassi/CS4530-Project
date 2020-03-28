@@ -13,5 +13,5 @@ data class UserDAO (
     var fcmToken: String? = DeviceRepository.fcmToken,
     var emergencyMessage: String = "Help me, I am in emergency situation.",
     var contactList: ArrayList<ContactDAO> = ArrayList(),
-    var alertHistories: ArrayList<AlertHistoryDAO> = ArrayList()
+    var alertHistories: HashMap<String, AlertHistoryDAO> = HashMap()
 )
