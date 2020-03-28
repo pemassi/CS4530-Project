@@ -21,6 +21,11 @@
             android:id="@+id/nav_received_history"
             android:icon="@drawable/ic_call_received_black_24dp"
             android:title="Received History" />
+
+        <item
+            android:id="@+id/nav_editmessage"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Edit Message" />
     </group>
 
 <!--    <item android:title="Communicate">-->

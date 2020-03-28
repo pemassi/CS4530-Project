@@ -7,4 +7,5 @@ object DatabaseConst
     const val ITEM_CONTACT_LIST = "contactList"
     const val ITEM_ALERT_HISTORIES = "alertHistories"
     const val ITEM_ALERT_RECEIVED_HISTORIES = "alertReceivedHistories"
+    const val EMERGENCY_MESSAGE = "emergencyMessage"
 }

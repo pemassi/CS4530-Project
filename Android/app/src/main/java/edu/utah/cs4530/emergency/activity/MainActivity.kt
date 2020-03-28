@@ -2,6 +2,10 @@ package edu.utah.cs4530.emergency.activity
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -27,8 +31,8 @@ class MainActivity : AppCompatActivity() {
     private val logger by getLogger()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var viewModel: MainViewModel
-
     private var isFcmTokenUpdated = false
+    private lateinit var inputText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +52,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home,
                 R.id.nav_contacts,
                 R.id.nav_history,
-                R.id.nav_received_history
+                R.id.nav_received_history,
+                R.id.nav_editmessage
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

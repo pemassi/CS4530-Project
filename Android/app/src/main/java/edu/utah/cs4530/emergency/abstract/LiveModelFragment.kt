@@ -15,9 +15,9 @@ abstract class LiveModelFragment<T : ViewModel>(private val modelClass: KClass<T
 {
     protected lateinit var applicationContext: Context
     protected lateinit var root: View
-    protected lateinit var viewModel: T
+    protected open lateinit var viewModel: T
 
-    final override fun onCreateView(
+    open override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
