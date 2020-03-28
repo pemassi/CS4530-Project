@@ -6,6 +6,7 @@ import com.google.firebase.database.IgnoreExtraProperties
 data class UserDAO (
     var name: String? = null,
     var phoneNumber: String? = null,
+    var emergencyMessage: EmergencyMessageDAO? = null,
     var imageUrl: String? = null,
     var fcmToken: String? = null,
     var contactList: ArrayList<ContactDAO> = ArrayList(),

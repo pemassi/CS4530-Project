@@ -2,46 +2,62 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#148E9E"
     tools:context=".ui.editmessage.EditMessageFragment">
 
     <Button
-        android:id="@+id/nextscreen_button"
-        android:layout_width="347dp"
-        android:layout_height="39dp"
-        android:text="Next screen"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
-
-    <Button
         android:id="@+id/save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="140dp"
+        android:layout_width="148dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="#3C4EB3"
         android:onClick="saveCustomMessage"
-        android:text="Save"
-        app:layout_constraintBottom_toTopOf="@+id/nextscreen_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="Save Message"
+        android:textColor="#03A9F4"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/message_text"
+        app:layout_constraintStart_toStartOf="@+id/message_text"
+        app:layout_constraintTop_toBottomOf="@+id/message_text"
         tools:ignore="OnClick" />
 
     <EditText
         android:id="@+id/message_text"
         android:layout_width="328dp"
-        android:layout_height="316dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="220dp"
+        android:layout_marginBottom="9dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
+        android:textAlignment="center"
+        android:textColor="#FBF4F4"
+        android:textIsSelectable="true"
+        android:textSize="22sp"
         app:layout_constraintBottom_toTopOf="@+id/save_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.957"
+        tools:text="This is your default Emergency Message that will go out to everyone on your Contacts List." />
+
+    <EditText
+        android:layout_width="285dp"
+        android:layout_height="86dp"
+        android:layout_marginTop="74dp"
+        android:layout_marginBottom="44dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Edit Emergency Message"
+        android:textColor="#ECE5E5"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/message_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
