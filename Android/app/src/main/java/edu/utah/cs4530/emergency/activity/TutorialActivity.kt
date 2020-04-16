@@ -20,7 +20,7 @@ class TutorialActivity: AppCompatActivity()
     private val tutorialAdapter = TutorialAdapter(
         listOf(
             TutorialDAO(
-                title = "Send an Emergency message",
+                title = "In the simplest way",
                 description = " You can send an Emergency message in the simplest way by swiping the SOS button",
                 icon = R.drawable.home_screen
             ),
