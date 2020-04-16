@@ -22,8 +22,6 @@ class FirebaseMessagingService : FirebaseMessagingService() {
      */
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
-        // TODO(developer): Handle FCM messages here.
-        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
        logger.info("From: ${remoteMessage.from}")
 
         // Check if message contains a data payload.
@@ -35,25 +33,18 @@ class FirebaseMessagingService : FirebaseMessagingService() {
             val name = remoteMessage.data["name"]
             val phoneNumber = remoteMessage.data["phoneNumber"]
             val imageUrl = remoteMessage.data["imageUrl"]
-        }
 
-        // Check if message contains a notification payload.
-        remoteMessage.notification?.let {
-            logger.debug("Message Notification Body: ${it.body}")
-
+            // Check if message contains a notification payload.
             EzNotification(applicationContext, NotificationConst.EMERGENCY).apply {
                 setIcon(R.drawable.ic_announcement_black_24dp)
-                setTitle(it.title!!)
-                setMessage(it.body!!)
+                setTitle("!!SOS!! - $name")
+                setMessage(emergencyMessage ?: "")
                 setVisibility(Notification.VISIBILITY_PUBLIC)
                 setIntent(SplashActivity::class.java)
                 setNotiToUser(true)
                 setWakeUp()
             }.show()
         }
-
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
     }
 
     /**

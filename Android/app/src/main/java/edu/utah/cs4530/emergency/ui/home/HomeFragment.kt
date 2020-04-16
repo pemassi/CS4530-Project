@@ -1,6 +1,7 @@
 package edu.utah.cs4530.emergency.ui.home
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -12,15 +13,24 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.iid.FirebaseInstanceId
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import edu.utah.cs4530.emergency.R
 import edu.utah.cs4530.emergency.abstract.LiveModelFragment
+import edu.utah.cs4530.emergency.activity.TutorialActivity
+import edu.utah.cs4530.emergency.dao.UserDAO
 import edu.utah.cs4530.emergency.extension.getLogger
 import edu.utah.cs4530.emergency.extension.showMessageBox
 import edu.utah.cs4530.emergency.global.Location
+import edu.utah.cs4530.emergency.repository.DeviceRepository
+import edu.utah.cs4530.emergency.repository.UserRepository
 import edu.utah.cs4530.emergency.service.CloudFunctions
+import edu.utah.cs4530.emergency.util.DeviceInfo
 import edu.utah.cs4530.emergency.util.NetworkUtil
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
@@ -52,7 +62,6 @@ class HomeFragment : LiveModelFragment<HomeViewModel>(HomeViewModel::class, R.la
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context!!)
 
         root.btn_sos.setOnSwipeListener {
-
             if(!NetworkUtil.isNetworkAvailable())
             {
                 context?.showMessageBox("Network Unavailable", "You are currently in offline. Please retry after get in online.")
@@ -76,10 +85,13 @@ class HomeFragment : LiveModelFragment<HomeViewModel>(HomeViewModel::class, R.la
             }
         }
 
+        //Check network status, and tell to user
         if(!NetworkUtil.isNetworkAvailable())
         {
             context?.showMessageBox("You are in offline now", "You are currently in offline now. You might not be able to use all features.")
         }
+
+
     }
 
     override fun onResume() {

@@ -18,6 +18,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.iid.FirebaseInstanceId
 import com.squareup.picasso.Picasso
 import edu.utah.cs4530.emergency.R
 import edu.utah.cs4530.emergency.component.picasso.RoundedTransformation
@@ -31,8 +32,6 @@ class MainActivity : AppCompatActivity() {
     private val logger by getLogger()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var viewModel: MainViewModel
-    private var isFcmTokenUpdated = false
-    private lateinit var inputText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,20 +58,23 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        //Observe user data
         viewModel.userDao.observe(this, Observer {
             it?.let {
                 val headerView = navView.getHeaderView(0)
                 headerView.tv_name.text = it.name
                 headerView.tv_email.text = it.phoneNumber
                 Picasso.get().load(it.imageUrl).transform(RoundedTransformation()).into(headerView.iv_profile)
-
-                if(!isFcmTokenUpdated){
-                    it.fcmToken = DeviceRepository.fcmToken
-                    UserRepository.setUser(FirebaseAuth.getInstance().uid!!, it)
-                    isFcmTokenUpdated = true
-                }
             }
         })
+
+        //Update FCM token
+        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
+            val fcmToken = instanceIdResult.token
+            logger.debug("Successfully get updated FCM token [$fcmToken}]")
+
+            DeviceRepository.fcmToken = fcmToken
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
