@@ -81,10 +81,6 @@ exports.sendEmergencyMessage = functions.https.onCall(async (data, context) => {
 
                 //Send push notification
                 var message = {
-                    notification: {
-                        title: `!!SOS!! - ${userDAO.name}`,
-                        body: emergencyMessage
-                    },
                     data: {
                         latitude: latitudeString.toString(),
                         longitude: longitudeString.toString(),

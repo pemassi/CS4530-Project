@@ -17,8 +17,10 @@ import com.gun0912.tedpermission.TedPermission
 import edu.utah.cs4530.emergency.R
 import edu.utah.cs4530.emergency.abstract.LiveModelFragment
 import edu.utah.cs4530.emergency.extension.getLogger
+import edu.utah.cs4530.emergency.extension.showMessageBox
 import edu.utah.cs4530.emergency.global.Location
 import edu.utah.cs4530.emergency.service.CloudFunctions
+import edu.utah.cs4530.emergency.util.NetworkUtil
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
@@ -50,23 +52,33 @@ class HomeFragment : LiveModelFragment<HomeViewModel>(HomeViewModel::class, R.la
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context!!)
 
         root.btn_sos.setOnSwipeListener {
-            Handler().postDelayed({
+
+            if(!NetworkUtil.isNetworkAvailable())
+            {
+                context?.showMessageBox("Network Unavailable", "You are currently in offline. Please retry after get in online.")
+                return@setOnSwipeListener
+            }
+
+            Handler().post {
                 CloudFunctions.sendEmergencyMessage(
-                        Location.lastLocation.latitude,
-                        Location.lastLocation.longitude
-                    )
+                    Location.lastLocation.latitude,
+                    Location.lastLocation.longitude
+                )
                     .continueWith {
-                        if(it.isSuccessful)
-                        {
+                        if(it.isSuccessful) {
                             btn_sos.showResultIcon(true, true)
-                        }
-                        else
-                        {
-                            logger.debug(it.exception.toString())
-                            btn_sos.showResultIcon(true, true)
+                        } else {
+                            btn_sos.showResultIcon(false, true)
+                            context?.showMessageBox("Error", "Fail to send emergency message due to below reason.\n\n${it.exception}")
+                            logger.error("Fail to send emergency message", it.exception)
                         }
                     }
-            }, 2000)
+            }
+        }
+
+        if(!NetworkUtil.isNetworkAvailable())
+        {
+            context?.showMessageBox("You are in offline now", "You are currently in offline now. You might not be able to use all features.")
         }
     }
 

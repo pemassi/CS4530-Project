@@ -32,7 +32,7 @@ class HistoryViewModel: ViewModel()
             logger.debug("Data updated [$dataSnapshot]")
 
             //Map object to ArrayList of ContactDAO.
-            _histories.value = ArrayList(dataSnapshot.children.map {it.getValue(AlertHistoryDAO::class.java) ?: throw Exception("Fail to convert object to AlertHistoryDAO")})
+            _histories.value = ArrayList(dataSnapshot.children.map {it.getValue(AlertHistoryDAO::class.java) ?: throw Exception("Fail to convert object to AlertHistoryDAO")}).apply{ this.sortByDescending { it.time }}
         }
 
         override fun onCancelled(error: DatabaseError) {
