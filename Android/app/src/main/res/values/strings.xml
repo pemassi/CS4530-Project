@@ -14,4 +14,5 @@
     <string name="Set_cnct">ADD</string>
     <string name="name" />
     <string name="number" />
+    <string name="skip_intro">Skip intro</string>
 </resources>
