@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/linearLayout_swipeBtn_hintContainer"
         android:layout_alignParentTop="true"
-        android:background="@android:color/holo_red_dark"
         android:gravity="center"
         android:textColor="@android:color/white">
 
