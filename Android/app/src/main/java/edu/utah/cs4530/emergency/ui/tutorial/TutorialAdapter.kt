@@ -8,8 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import edu.utah.cs4530.emergency.R
 import edu.utah.cs4530.emergency.dao.TutorialDAO
-import kotlinx.android.synthetic.main.fragment_tutorial.*
-import org.w3c.dom.Text
 
 class TutorialAdapter(private val tutorial: List<TutorialDAO>) : RecyclerView.Adapter<TutorialAdapter.TutorialViewHolder>() {
 
@@ -38,7 +36,7 @@ class TutorialAdapter(private val tutorial: List<TutorialDAO>) : RecyclerView.Ad
         fun bind(tutorial: TutorialDAO) {
             textTitle.text = tutorial.title
             textDescription.text = tutorial.description
-            image.setImageResource(tutorial.icon)
+            image.setImageResource(tutorial.screen)
         }
     }
 

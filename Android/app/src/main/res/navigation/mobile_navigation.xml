@@ -45,9 +45,10 @@
         android:name="edu.utah.cs4530.emergency.ui.editmessage.EditMessageFragment"
         android:label="Edit Message"
         tools:layout="@layout/fragment_edit_message" />
-    <fragment
+
+    <activity
         android:id="@+id/nav_tutorial"
-        android:name="edu.utah.cs4530.emergency.activity.TutorialActivity"
         android:label="Tutorial"
+        android:name="edu.utah.cs4530.emergency.activity.TutorialActivity"
         tools:layout="@layout/activity_tutorial" />
 </navigation>
