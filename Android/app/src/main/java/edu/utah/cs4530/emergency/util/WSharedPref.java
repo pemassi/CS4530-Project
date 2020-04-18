@@ -17,7 +17,12 @@ public class WSharedPref {
 	public static void setString(String key, String value){
 		SharedPreferences pref = EmergencyApplication.context.getSharedPreferences(PREF_NAME, Activity.MODE_PRIVATE);
 		SharedPreferences.Editor editor = pref.edit();
-		editor.putString(key, value);
+
+		if(value == null)
+			editor.remove(key);
+		else
+			editor.putString(key, value);
+
 		editor.apply();
 	}
 
@@ -29,7 +34,12 @@ public class WSharedPref {
 	public static void setBoolean(String key, Boolean value){
 		SharedPreferences pref = EmergencyApplication.context.getSharedPreferences(PREF_NAME, Activity.MODE_PRIVATE);
 		SharedPreferences.Editor editor = pref.edit();
-		editor.putBoolean(key, value);
+
+		if(value == null)
+			editor.remove(key);
+		else
+			editor.putBoolean(key, value);
+
 		editor.apply();
 	}
 
@@ -38,10 +48,15 @@ public class WSharedPref {
 		return pref.getInt(key, value);
 	}
 
-	public static void setInt(String key, int value){
+	public static void setInt(String key, Integer value){
 		SharedPreferences pref = EmergencyApplication.context.getSharedPreferences(PREF_NAME, Activity.MODE_PRIVATE);
 		SharedPreferences.Editor editor = pref.edit();
-		editor.putInt(key, value);
+
+		if(value == null)
+			editor.remove(key);
+		else
+			editor.putInt(key, value);
+
 		editor.apply();
 	}
 }

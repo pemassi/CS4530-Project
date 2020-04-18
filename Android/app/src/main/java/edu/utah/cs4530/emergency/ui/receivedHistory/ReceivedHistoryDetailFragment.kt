@@ -67,7 +67,7 @@ class ReceivedHistoryDetailFragment: LiveModelFragment<ReceivedHistoryDetailView
 
     companion object
     {
-        const val BUNDLE_ALERT_HISTORY_DAO = "ALERT_HISTORY_DAO"
+        const val BUNDLE_ALERT_HISTORY_DAO = "ALERT_RECEIVED_HISTORY_DAO"
 
         fun makeBundle(alertReceivedHistoryDAO: AlertReceivedHistoryDAO): Bundle
         {

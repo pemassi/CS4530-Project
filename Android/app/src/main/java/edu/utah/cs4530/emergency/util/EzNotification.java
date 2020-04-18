@@ -69,6 +69,10 @@ public class EzNotification {
         this.notification.setStyle((new NotificationCompat.BigTextStyle()).bigText(message));
     }
 
+    public void setSubMessage(@NonNull String message) {
+        this.notification.setSubText(message);
+    }
+
     public void setTicker(@NonNull String ticker) {
         this.notification.setTicker(ticker);
     }
@@ -86,6 +90,10 @@ public class EzNotification {
 
     public void setIntent(@NonNull Intent intent) {
         PendingIntent pendingIntent = PendingIntent.getActivity(this.mContext, 0, intent, 0);
+        this.notification.setContentIntent(pendingIntent);
+    }
+
+    public void setIntent(@NonNull PendingIntent pendingIntent) {
         this.notification.setContentIntent(pendingIntent);
     }
 
@@ -153,6 +161,8 @@ public class EzNotification {
             if (Build.VERSION.SDK_INT > 20 && !this.visiblitySetted) {
                 this.notification.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
             }
+
+            this.notification.setAutoCancel(true);
 
             Notification notify = this.notification.build();
             if (this.mNotiToUser) {

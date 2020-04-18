@@ -1,5 +1,6 @@
 package edu.utah.cs4530.emergency.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -11,6 +12,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -22,9 +25,13 @@ import com.google.firebase.iid.FirebaseInstanceId
 import com.squareup.picasso.Picasso
 import edu.utah.cs4530.emergency.R
 import edu.utah.cs4530.emergency.component.picasso.RoundedTransformation
+import edu.utah.cs4530.emergency.dao.AlertHistoryDAO
+import edu.utah.cs4530.emergency.dao.AlertReceivedHistoryDAO
+import edu.utah.cs4530.emergency.extension.default
 import edu.utah.cs4530.emergency.extension.getLogger
 import edu.utah.cs4530.emergency.repository.DeviceRepository
 import edu.utah.cs4530.emergency.repository.UserRepository
+import edu.utah.cs4530.emergency.ui.history.ReceivedHistoryDetailFragment
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 
 class MainActivity : AppCompatActivity() {
@@ -77,6 +84,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        logger.debug("onNewIntent()")
+
+        //Check activity is opened from notification
+        intent?.extras?.getSerializable(BUNDLE_ALERT_RECEIVED_HISTORY_DAO)?.let {
+            (it as? AlertReceivedHistoryDAO)?.let {
+                val navController = findNavController(R.id.nav_host_fragment)
+                val navOptions = NavOptions.Builder().default().build()
+                navController.navigate(R.id.nav_received_history_detail, ReceivedHistoryDetailFragment.makeBundle(it), navOptions)
+            }
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
@@ -86,5 +107,19 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    companion object
+    {
+        const val BUNDLE_ALERT_RECEIVED_HISTORY_DAO = "ALERT_RECEIVED_HISTORY_DAO"
+
+        fun makeBundle(alertReceivedHistoryDAO: AlertReceivedHistoryDAO): Bundle
+        {
+            //Set arguments
+            val bundle = Bundle()
+            bundle.putSerializable(BUNDLE_ALERT_RECEIVED_HISTORY_DAO, alertReceivedHistoryDAO)
+
+            return bundle
+        }
     }
 }

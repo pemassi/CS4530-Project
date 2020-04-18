@@ -25,6 +25,8 @@ exports.sendEmergencyMessage = functions.https.onCall(async (data, context) => {
     const emergencyMessage = userDAO.emergencyMessage
     const uuid = Math.random().toString(36).slice(2) + randomBytes(8).toString('hex') + new Date().getTime()
 
+    console.info("Requested by " + uid)
+
     //Insert alert history
     await admin.database().ref(`users/${uid}/alertHistories/${uuid}`).set({
         time: time,
@@ -34,7 +36,7 @@ exports.sendEmergencyMessage = functions.https.onCall(async (data, context) => {
 
     //Process contact list
     contactList.forEach(async (item) => {
-        let contactUserDataSanpshot = await admin.database().ref(`users`).orderByChild("phoneNumber").equalTo(`${item.phoneNumber}`).limitToFirst(1).once("value");
+        let contactUserDataSanpshot = await admin.database().ref(`users`).orderByChild("phoneNumber").equalTo(`${item.phoneNumber}`).once("value");
 
         //When fail to find user, record failing to send push notification.
         if(contactUserDataSanpshot === null)
@@ -54,6 +56,8 @@ exports.sendEmergencyMessage = functions.https.onCall(async (data, context) => {
                 const targetImageUrl = item.val().imageUrl
                 const targetPhoneNumber = item.val().phoneNumber
                 const targetFcmToken = item.val().fcmToken
+
+                console.info("User searched : " + targetUid)
 
                 //Record recevied history
                 await admin.database().ref(`users/${targetUid}/alertReceivedHistories/${uuid}`).set({
@@ -82,12 +86,14 @@ exports.sendEmergencyMessage = functions.https.onCall(async (data, context) => {
                 //Send push notification
                 var message = {
                     data: {
+                        time: time,
                         latitude: latitudeString.toString(),
                         longitude: longitudeString.toString(),
                         emergencyMessage: emergencyMessage,
                         name: userDAO.name,
                         phoneNumber: userDAO.phoneNumber,
-                        imageUrl: userDAO.imageUrl
+                        imageUrl: userDAO.imageUrl,
+                        uid: targetUid
                     },
                     android: {
                         priority: "high"
@@ -96,7 +102,7 @@ exports.sendEmergencyMessage = functions.https.onCall(async (data, context) => {
                     };
 
                 let pushMessageResult = await admin.messaging().send(message);
-                console.log(pushMessageResult);
+                console.info("FCM Sent : " + pushMessageResult);
             });
         }
     });
